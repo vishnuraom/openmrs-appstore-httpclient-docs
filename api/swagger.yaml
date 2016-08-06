@@ -1,0 +1,154 @@
+---
+swagger: "2.0"
+info:
+  description: "openmrs-appstore-httpclient"
+  version: "1.0.0"
+  title: "openmrs-appstore-httpclient"
+host: "gentle-ravine-53112.herokuapp.com"
+basePath: "/"
+schemes:
+- "https"
+produces:
+- "application/json"
+paths:
+  /alldetails:
+    get:
+      summary: "Gets all the information about the packages in a repo"
+      description: "Performs Get Package on all the packages available in a repository\
+        \ \n"
+      operationId: "alldetailsGET"
+      parameters:
+      - name: "repo"
+        in: "query"
+        description: "repo name."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "An array of packages information"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Def"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+  /details:
+    get:
+      summary: "Get Package"
+      description: "Get general information about a specified package with package\
+        \ name."
+      operationId: "detailsGET"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "package name(openmrs-ui-framework)"
+        required: true
+        type: "string"
+      - name: "repo"
+        in: "query"
+        description: "repository name(omod)"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Get general information about a specified package with package\
+            \ name."
+          schema:
+            $ref: "#/definitions/Def"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+  /packagefiles:
+    get:
+      summary: "Get Package Files"
+      description: "Get all files in a given package."
+      operationId: "packagefilesGET"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "package name(openmrs-ui-framework)"
+        required: true
+        type: "string"
+      - name: "repo"
+        in: "query"
+        description: "repository name(omod)"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Get all files in a given package"
+          schema:
+            $ref: "#/definitions/Def"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+  /packages:
+    get:
+      summary: "Get Packages"
+      description: "Returns all the packages availble in particular repo."
+      operationId: "packagesGET"
+      parameters:
+      - name: "repo"
+        in: "query"
+        description: "repo name."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Returns all the packages availble in particular repo."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Def"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+  /repositories:
+    get:
+      summary: "Get Repository"
+      description: "Get general information about a repository of the specified user\n"
+      operationId: "repositoriesGET"
+      parameters:
+      - name: "repo"
+        in: "query"
+        description: "repo name."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "An array of products"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Def"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+definitions:
+  Def:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      fields:
+        type: "string"
